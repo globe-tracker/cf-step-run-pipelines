@@ -1,0 +1,17 @@
+{
+  "Arguments": {
+    "PIPELINE_ID": "some-project/some-pipeline",
+    "KEYS": "project1,project2,project3",
+    "WAIT": "false",
+    "ARGUMENTS": [
+      {
+        "name": "SOME_VALUE",
+        "value": "WORLD"
+      },
+      {
+        "name": "SAY",
+        "value": "HELLO"
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "cf-step-run-pipelines",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./scripts/dev"
+  },
+  "repository": "https://github.com/globe-tracker/cf-step-run-pipelines.git",
+  "author": "Julius Biskopstø <jbiskur@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ascii-art": "^2.5.0",
+    "chalk": "^4.1.0",
+    "chalkline": "^0.0.5",
+    "chokidar": "^3.5.0",
+    "shelljs": "^0.8.4",
+    "yaml": "^1.10.0",
+    "yargs": "^16.2.0"
+  }
+}

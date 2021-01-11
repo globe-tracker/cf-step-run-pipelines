@@ -1,0 +1,98 @@
+version: '1.0'
+kind: step-type
+metadata:
+  name: globetracker/run-multi-pipelines
+  isPublic: true
+  description: |-
+    This runs multiple pipelines
+  sources:
+    - 'https://github.com/globe-tracker/cf-step-run-pipelines.git'
+  stage: incubating
+  maintainers:
+    - name: Julius Biskopstø
+  categories:
+    - git
+  official: false
+  tags: []
+  icon:
+    type: svg
+    url: https://raw.githubusercontent.com/globe-tracker/cf-step-run-pipelines/main/branch.svg
+    background: '#f4f4f4'
+  examples:
+    - description: example-1
+      workflow:
+        version: '1.0'
+        steps:
+          say_hello:
+            title: Running multiple pipelines
+            type: globetracker/run-multi-pipelines
+            arguments:
+              PIPELINE_ID: "some-project/some-pipeline"
+              KEYS: "project1,project2,project3"
+              ARGUMENTS:
+              - name: "SAY"
+                value: "HELLO"
+              - name: "SOME_VALUE"
+                value: "WORLD"
+  latest: true
+  version: 1.0.10
+spec:
+  arguments: |-
+    {
+      "definitions": {},
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "additionalProperties": false,
+      "patterns": [],
+      "required": [
+        "PIPELINE_ID",
+        "ARGUMENTS",
+        "KEYS"
+      ],
+      "properties": {
+        "PIPELINE_ID": {
+          "type": "string",
+          "description": "The ID of the pipeline"
+        },
+        "WAIT": {
+          "type": "boolean",
+          "description": "Should the execution wait for the pipelines to finish"
+          "default": false
+        }
+        "KEYS": {
+          "type": "string",
+          "description": "The main keys that define how many pipelines are created, this is passed to the pipeline as KEY"
+        }
+        "ARGUMENTS": {
+            "type": "array",
+            "description": "list of arguments to pass to the pipelines",
+            "items": {
+              "type": "object"
+            }
+        }
+      }
+    }
+
+  delimiters:
+    left: '[['
+    right: ']]'
+  stepsTemplate: |-
+    print_info_message:
+      name: globetracker/run-multi-pipelines
+      title: Info message
+      image: alpine
+      commands:
+        - echo "Running [[ .Arguments.PIPELINE_ID ]], with the following keys [[ strings.Split "," .Arguments.KEYS ]]"
+    [[- range $index, $value := strings.Split "," .Arguments.KEYS ]]
+    running_pipeline_[[ strings.SnakeCase $value ]]:
+      title: Running pipeline [[ .Arguments.PIPELINE_ID ]]
+      fail_fast: false
+      type: codefresh-run
+      arguments:
+        DETACH: [[ .Arguments.WAIT ]]
+        PIPELINE_ID: [[ .Arguments.PIPELINE_ID ]]
+        VARIABLE:
+          [[- range $index, $value := .Arguments.ARGUMENTS ]]
+          - [[ $value.name ]]=[[ $value.value ]]
+          [[- end ]]
+    [[- end ]]
