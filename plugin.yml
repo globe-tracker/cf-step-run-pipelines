@@ -30,7 +30,7 @@ metadata:
               PIPELINE_ID: "some-project/some-pipeline"
               KEYS: "project1,project2,project3"
   latest: true
-  version: 1.0.10
+  version: 1.0.11
 spec:
   arguments: |-
     {
@@ -52,7 +52,7 @@ spec:
         "KEYS": {
           "type": "string",
           "description": "The main keys that define how many pipelines are created, this is passed to the pipeline as KEY"
-        },
+        }
       }
     }
   delimiters:
