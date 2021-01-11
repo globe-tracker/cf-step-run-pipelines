@@ -29,11 +29,6 @@ metadata:
             arguments:
               PIPELINE_ID: "some-project/some-pipeline"
               KEYS: "project1,project2,project3"
-              ARGUMENTS:
-              - name: "SAY"
-                value: "HELLO"
-              - name: "SOME_VALUE"
-                value: "WORLD"
   latest: true
   version: 1.0.10
 spec:
@@ -54,22 +49,10 @@ spec:
           "type": "string",
           "description": "The ID of the pipeline"
         },
-        "WAIT": {
-          "type": "boolean",
-          "description": "Should the execution wait for the pipelines to finish",
-          "default": false
-        },
         "KEYS": {
           "type": "string",
           "description": "The main keys that define how many pipelines are created, this is passed to the pipeline as KEY"
         },
-        "ARGUMENTS": {
-            "type": "array",
-            "description": "list of arguments to pass to the pipelines",
-            "items": {
-              "type": "object"
-            }
-        }
       }
     }
   delimiters:
@@ -88,10 +71,7 @@ spec:
       fail_fast: false
       type: codefresh-run
       arguments:
-        DETACH: [[ .Arguments.WAIT ]]
-        PIPELINE_ID: [[ .Arguments.PIPELINE_ID ]]
-        VARIABLE:
-          [[- range $index, $value := .Arguments.ARGUMENTS ]]
-          - [[ $value.name ]]=[[ $value.value ]]
-          [[- end ]]
+        DETACH: false
+        PIPELINE_ID: "[[ .Arguments.PIPELINE_ID ]]"
+        KEY: "[[ $value ]]"
     [[- end ]]
