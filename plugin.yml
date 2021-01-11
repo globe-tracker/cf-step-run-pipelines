@@ -56,13 +56,13 @@ spec:
         },
         "WAIT": {
           "type": "boolean",
-          "description": "Should the execution wait for the pipelines to finish"
+          "description": "Should the execution wait for the pipelines to finish",
           "default": false
-        }
+        },
         "KEYS": {
           "type": "string",
           "description": "The main keys that define how many pipelines are created, this is passed to the pipeline as KEY"
-        }
+        },
         "ARGUMENTS": {
             "type": "array",
             "description": "list of arguments to pass to the pipelines",
@@ -72,7 +72,6 @@ spec:
         }
       }
     }
-
   delimiters:
     left: '[['
     right: ']]'
